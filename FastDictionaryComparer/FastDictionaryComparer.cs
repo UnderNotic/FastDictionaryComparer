@@ -14,7 +14,14 @@ namespace FastDictionaryComparer
         {
             var allKeys = dicts.SelectMany(d => d.Keys).Distinct().ToArray();
 
-            var helperDict = dicts.ToDictionary(k => k, v => allKeys.Select(k => v?[k]?.GetHashCode()).ToArray());
+            var helperDict = dicts.ToDictionary(k => k, v => allKeys.Select(k =>
+            {
+                if (v.TryGetValue(k, out var value))
+                {
+                    return value.GetHashCode();
+                }
+                return new Nullable<int>();
+            }).ToArray());
 
             return new FastDictionaryComparer<T, Y>(helperDict);
         }
