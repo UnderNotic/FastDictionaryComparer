@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastDictionaryComparer", "F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastDictionaryComparer.Test", "FastDictionaryComparer.Test\FastDictionaryComparer.Test.csproj", "{A577F83E-7FC7-4446-A16B-BCAD8FB9AB07}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FastDictionaryComparer.Benchmark", "FastDictionaryComparer.Benchmark\FastDictionaryComparer.Benchmark.csproj", "{9690DA86-90C5-4C92-8DDB-7C50F2F9E7CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{A577F83E-7FC7-4446-A16B-BCAD8FB9AB07}.Release|x64.Build.0 = Release|Any CPU
 		{A577F83E-7FC7-4446-A16B-BCAD8FB9AB07}.Release|x86.ActiveCfg = Release|Any CPU
 		{A577F83E-7FC7-4446-A16B-BCAD8FB9AB07}.Release|x86.Build.0 = Release|Any CPU
+		{9690DA86-90C5-4C92-8DDB-7C50F2F9E7CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9690DA86-90C5-4C92-8DDB-7C50F2F9E7CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9690DA86-90C5-4C92-8DDB-7C50F2F9E7CD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9690DA86-90C5-4C92-8DDB-7C50F2F9E7CD}.Debug|x64.Build.0 = Debug|Any CPU
+		{9690DA86-90C5-4C92-8DDB-7C50F2F9E7CD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9690DA86-90C5-4C92-8DDB-7C50F2F9E7CD}.Debug|x86.Build.0 = Debug|Any CPU
+		{9690DA86-90C5-4C92-8DDB-7C50F2F9E7CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9690DA86-90C5-4C92-8DDB-7C50F2F9E7CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9690DA86-90C5-4C92-8DDB-7C50F2F9E7CD}.Release|x64.ActiveCfg = Release|Any CPU
+		{9690DA86-90C5-4C92-8DDB-7C50F2F9E7CD}.Release|x64.Build.0 = Release|Any CPU
+		{9690DA86-90C5-4C92-8DDB-7C50F2F9E7CD}.Release|x86.ActiveCfg = Release|Any CPU
+		{9690DA86-90C5-4C92-8DDB-7C50F2F9E7CD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
