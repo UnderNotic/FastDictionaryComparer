@@ -10,7 +10,7 @@ namespace FastDictionaryComparer.Benchmark
     [RankColumn]
     public class FastDictionaryComparerBenchmark
     {
-        private static Random random = new Random();
+        private static Random _random = new Random();
         private ComparableDictionaryOneOf<string, string>[] _comparableOneOfDicts;
         private ComparableDictionaryAllOf<string, string>[] _comparableAllOfDicts;
         private Dictionary<string, string>[] _data;
@@ -26,11 +26,11 @@ namespace FastDictionaryComparer.Benchmark
         [Params(10)]
         public int DictLength;
 
-        public static string RandomString(int length)
+        private static string RandomString(int length)
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
+              .Select(s => s[_random.Next(s.Length)]).ToArray());
         }
 
         [GlobalSetup]
