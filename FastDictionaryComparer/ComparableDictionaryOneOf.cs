@@ -7,7 +7,7 @@ namespace FastDictionaryComparer
         public Dictionary<T, Y> Value { get; }
         private int?[] _comparableValues { get; }
 
-        public ComparableDictionaryOneOf(Dictionary<T, Y> dict, int?[] comparableValues)
+        internal ComparableDictionaryOneOf(Dictionary<T, Y> dict, int?[] comparableValues)
         {
             Value = dict;
             _comparableValues = comparableValues;

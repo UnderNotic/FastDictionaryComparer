@@ -11,9 +11,11 @@ namespace FastDictionaryComparer.Benchmark
     public class FastDictionaryComparerBenchmark
     {
         private static Random random = new Random();
-        private ComparableDictionaryOneOf<string, string>[] comparableOneOfDicts;
-        private ComparableDictionaryAllOf<string, string>[] comparableAllOfDicts;
-        private Dictionary<string, string>[] data;
+        private ComparableDictionaryOneOf<string, string>[] _comparableOneOfDicts;
+        private ComparableDictionaryAllOf<string, string>[] _comparableAllOfDicts;
+        private Dictionary<string, string>[] _data;
+        private ComparableDictionaryFactory<string, string> _factory;
+        private Dictionary<string, string> _toFindDict = new Dictionary<string, string> { { "12345", "12345" }, { "1234", "1234" }, { "123", "123" } };
 
         [Params(100, 1000)]
         public int DictNumber;
@@ -34,27 +36,26 @@ namespace FastDictionaryComparer.Benchmark
         [GlobalSetup]
         public void Setup()
         {
-            data = Enumerable.Range(0, DictNumber).Select(_ => Enumerable.Range(0, DictLength).ToDictionary(k => k.ToString(), v => RandomString(KeyValueStringLength))).ToArray();
-            comparableOneOfDicts = ComparableDictionaryFactory.CreateComparableOneOfDictionaries(data);
-            comparableAllOfDicts = ComparableDictionaryFactory.CreateComparableAllOfDictionaries(data);
+            _data = Enumerable.Range(0, DictNumber).Select(_ => Enumerable.Range(0, DictLength).ToDictionary(k => k.ToString(), v => RandomString(KeyValueStringLength))).ToArray();
+            _factory = new ComparableDictionaryFactory<string, string>(_data);
+            _comparableOneOfDicts = _data.Select(d => _factory.CreateComparableOneOfDictionary(d)).ToArray();
+            _comparableAllOfDicts = _data.Select(d => _factory.CreateComparableAllOfDictionary(d)).ToArray();
         }
 
         [Benchmark]
         public int RefCount()
         {
-            var toFind = new Dictionary<string, string> { { "12345", "12345" }, { "1234", "1234" }, { "123", "123" } };
-            return data.Count(x => x == toFind);
+            return _data.Count(x => x == _toFindDict);
         }
 
         [Benchmark]
         public int LinqCount()
         {
-            var toFind = new Dictionary<string, string> { { "12345", "12345" }, { "1234", "1234" }, { "123", "123" } };
-            return data.Count(x =>
+            return _data.Count(x =>
             {
                 foreach (var kvp in x)
                 {
-                    if (toFind.TryGetValue(kvp.Key, out var v))
+                    if (_toFindDict.TryGetValue(kvp.Key, out var v))
                     {
                         return v == kvp.Value;
                     }
@@ -66,15 +67,15 @@ namespace FastDictionaryComparer.Benchmark
         [Benchmark]
         public int ComparableOneOfDictionaryCount()
         {
-            var toFind = new ComparableDictionaryOneOf<string, string>(null, Enumerable.Range(0, DictLength).Cast<int?>().ToArray());
-            return comparableOneOfDicts.Count(x => x == toFind);
+            var toFind = _factory.CreateComparableOneOfDictionary(_toFindDict);
+            return _comparableOneOfDicts.Count(x => x == toFind);
         }
 
         [Benchmark]
         public int ComparableAllOfDictionaryCount()
         {
-            var toFind = new ComparableDictionaryAllOf<string, string>(null, Enumerable.Range(0, DictLength).Cast<int?>().ToArray());
-            return comparableAllOfDicts.Count(x => x == toFind);
+            var toFind = _factory.CreateComparableAllOfDictionary(_toFindDict);
+            return _comparableAllOfDicts.Count(x => x == toFind);
         }
     }
 

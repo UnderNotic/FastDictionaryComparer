@@ -13,11 +13,6 @@ namespace FastDictionaryComparer.Test
         {
             var x1 = new Dictionary<string, string> { { "a", "a" } };
             var x2 = new Dictionary<string, string> { { "a", "a" }, {"b", "b"} };
-
-         
-            var comp = FastDictionaryComparer<string, string>.Create(new[] { x1, x2 });
-
-            Console.WriteLine(new[] { x1 }.Contains(x2, comp).ToString());
         }
     }
 }

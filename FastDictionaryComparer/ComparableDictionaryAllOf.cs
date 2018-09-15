@@ -8,7 +8,7 @@ namespace FastDictionaryComparer
         public Dictionary<T, Y> Value { get; }
         private int _hashCode { get; }
 
-        public ComparableDictionaryAllOf(Dictionary<T, Y> dict, int?[] comparableValues)
+        internal ComparableDictionaryAllOf(Dictionary<T, Y> dict, int?[] comparableValues)
         {
             Value = dict;
             _hashCode = ((IStructuralEquatable)comparableValues).GetHashCode(EqualityComparer<int?>.Default);
