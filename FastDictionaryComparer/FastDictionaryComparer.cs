@@ -36,28 +36,13 @@ namespace FastDictionaryComparer
         {
             for (var i = 0; i < dictLength; i++)
             {
-                if (dict[x][i] == dict[y][i])
+                if (dict.TryGetValue(x, out var v1) && dict.TryGetValue(y, out var v2))
                 {
-                    return true;
+                    return v1[i] == v2[i];
                 }
             }
             return false;
         }
-
-
-        //Is subset
-        public bool Equals2(Dictionary<T, Y> x, Dictionary<T, Y> y)
-        {
-            for (var i = 0; i < dictLength; i++)
-            {
-                if (dict[x][i] != null && dict[y][i] != null && dict[x][i] != dict[y][i])
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
 
         public int GetHashCode(Dictionary<T, Y> obj)
         {

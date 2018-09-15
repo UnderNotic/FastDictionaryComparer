@@ -37,12 +37,16 @@ namespace FastDictionaryComparer
 
         public bool Equals(Dictionary<T, Y> x, Dictionary<T, Y> y)
         {
-            return dict[x] == dict[y];
+            if (dict.TryGetValue(x, out var v1) && dict.TryGetValue(y, out var v2))
+            {
+                return v1 == v2;
+            }
+            return false;
         }
 
-        public int GetHashCode(Dictionary<T, Y> obj)
-        {
-            return 1;
-        }
+    public int GetHashCode(Dictionary<T, Y> obj)
+    {
+        return 1;
     }
+}
 }
