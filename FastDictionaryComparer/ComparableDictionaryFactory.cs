@@ -5,13 +5,17 @@ using FastDictionaryComparer;
 
 public static class ComparableDictionaryFactory
 {
-    public static ComparableDictionary<T, Y>[] CreateComparableDictionaries<T, Y>(Dictionary<T, Y>[] dicts)
+    public static ComparableDictionaryOneOf<T, Y>[] CreateComparableOneOfDictionaries<T, Y>(Dictionary<T, Y>[] dicts) => Create(dicts).Select(t => new ComparableDictionaryOneOf<T, Y>(t.dict, t.comparableValues)).ToArray();
+
+    public static ComparableDictionaryAllOf<T, Y>[] CreateComparableAllOfDictionaries<T, Y>(Dictionary<T, Y>[] dicts) => Create(dicts).Select(t => new ComparableDictionaryAllOf<T, Y>(t.dict, t.comparableValues)).ToArray();
+
+    public static IEnumerable<(Dictionary<T, Y> dict, int?[] comparableValues)> Create<T, Y>(Dictionary<T, Y>[] dicts)
     {
         var allKeys = dicts.SelectMany(d => d.Keys).Distinct().ToArray();
 
         return dicts.Select(dict =>
         {
-            var comparableValue = allKeys.Select(key =>
+            var comparableValues = allKeys.Select(key =>
             {
                 if (dict.TryGetValue(key, out var value))
                 {
@@ -19,27 +23,7 @@ public static class ComparableDictionaryFactory
                 }
                 return new Nullable<int>();
             }).ToArray();
-            return new ComparableDictionary<T ,Y>(dict, comparableValue);
-
-        }).ToArray();
+            return (dict, comparableValues);
+        });
     }
-    public static AllComparableDictionary<T, Y>[] CreateAllComparableDictionaries<T, Y>(Dictionary<T, Y>[] dicts)
-    {
-        var allKeys = dicts.SelectMany(d => d.Keys).Distinct().ToArray();
-
-        return dicts.Select(dict =>
-        {
-            var comparableValue = allKeys.Select(key =>
-            {
-                if (dict.TryGetValue(key, out var value))
-                {
-                    return value.GetHashCode();
-                }
-                return new Nullable<int>();
-            }).ToArray();
-            return new AllComparableDictionary<T ,Y>(dict, comparableValue);
-
-        }).ToArray();
-    }
-    
 }

@@ -11,19 +11,17 @@ namespace FastDictionaryComparer.Benchmark
     public class FastDictionaryComparerBenchmark
     {
         private static Random random = new Random();
-        private FastAllDictionaryComparer<string, string> allDictionaryComparer;
-        private FastDictionaryComparer<string, string> dictionaryComparer;
-        private ComparableDictionary<string, string>[] comparableDicts;
-        private AllComparableDictionary<string, string>[] allComparableDicts;
+        private ComparableDictionaryOneOf<string, string>[] comparableOneOfDicts;
+        private ComparableDictionaryAllOf<string, string>[] comparableAllOfDicts;
         private Dictionary<string, string>[] data;
 
         [Params(1000)]
         public int DictNumber;
 
-        [Params(5)]
+        [Params(5, 10)]
         public int KeyValueStringLength;
 
-        [Params(5)]
+        [Params(5, 10)]
         public int DictLength;
 
         public static string RandomString(int length)
@@ -37,20 +35,18 @@ namespace FastDictionaryComparer.Benchmark
         public void Setup()
         {
             data = Enumerable.Range(0, DictNumber).Select(_ => Enumerable.Range(0, DictLength).ToDictionary(k => k.ToString(), v => RandomString(KeyValueStringLength))).ToArray();
-            allDictionaryComparer = FastAllDictionaryComparer<string, string>.Create(data);
-            dictionaryComparer = FastDictionaryComparer<string, string>.Create(data);
-            comparableDicts = ComparableDictionaryFactory.CreateComparableDictionaries(data);
-            allComparableDicts = ComparableDictionaryFactory.CreateAllComparableDictionaries(data);
+            comparableOneOfDicts = ComparableDictionaryFactory.CreateComparableOneOfDictionaries(data);
+            comparableAllOfDicts = ComparableDictionaryFactory.CreateComparableAllOfDictionaries(data);
         }
 
         [Benchmark]
-        public bool RefContains() => data.Contains(new Dictionary<string, string> { { "12345", "12345" }, { "1234", "1234" }, { "123", "123" } });
+        public int RefCount() => data.Count(x => x == new Dictionary<string, string> { { "12345", "12345" }, { "1234", "1234" }, { "123", "123" } });
 
         [Benchmark]
-        public bool LinqContains()
+        public int LinqCount()
         {
             var toFind = new Dictionary<string, string> { { "12345", "12345" }, { "1234", "1234" }, { "123", "123" } };
-            return data.Any(x =>
+            return data.Count(x =>
             {
                 foreach (var kvp in x)
                 {
@@ -64,16 +60,10 @@ namespace FastDictionaryComparer.Benchmark
         }
 
         [Benchmark]
-        public bool AllDictionaryComparerContains() => data.Contains(new Dictionary<string, string> { { "12345", "12345" }, { "1234", "1234" }, { "123", "123" } }, allDictionaryComparer);
+        public int ComparableOneOfDictionaryContains() => comparableOneOfDicts.Count(x => x == new ComparableDictionaryOneOf<string, string>(null, Enumerable.Range(0, DictLength).Cast<int?>().ToArray()));
 
         [Benchmark]
-        public bool DictionaryComparerContains() => data.Contains(new Dictionary<string, string> { { "12345", "12345" }, { "1234", "1234" }, { "123", "123" } }, dictionaryComparer);
-
-        [Benchmark]
-        public bool ComparableDictionaryContains() => comparableDicts.Contains(new ComparableDictionary<string, string>(null, Enumerable.Range(0, DictLength).Cast<int?>().ToArray()));
-
-        [Benchmark]
-        public bool AllComparableDictionaryContains() => allComparableDicts.Contains(new AllComparableDictionary<string, string>(null, Enumerable.Range(0, DictLength).Cast<int?>().ToArray()));
+        public int AllComparableAllOfDictionaryContains() => comparableAllOfDicts.Count(x => x == new ComparableDictionaryAllOf<string, string>(null, Enumerable.Range(0, DictLength).Cast<int?>().ToArray()));
     }
 
     class Program
