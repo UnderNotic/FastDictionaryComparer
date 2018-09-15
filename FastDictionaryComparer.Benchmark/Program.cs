@@ -7,7 +7,7 @@ using BenchmarkDotNet.Running;
 
 namespace FastDictionaryComparer.Benchmark
 {
-    [RankColumn]
+    [RPlotExporter, RankColumn]
     public class FastDictionaryComparerBenchmark
     {
         private static Random _random = new Random();
@@ -17,7 +17,7 @@ namespace FastDictionaryComparer.Benchmark
         private ComparableDictionaryFactory<string, string> _factory;
         private Dictionary<string, string> _toFindDict = new Dictionary<string, string> { { "12345", "12345" }, { "1234", "1234" }, { "123", "123" } };
 
-        [Params(100, 1000)]
+        [Params(100, 500, 1000, 2000, 3000, 5000, 10000)]
         public int DictNumber;
 
         [Params(10)]
