@@ -16,11 +16,13 @@ namespace FastDictionaryComparer
 
         public override bool Equals(object obj)
         {
-            var casted = obj as ComparableDictionaryAllOf<T, Y>;
-            if (casted != null)
+            if (obj != null)
             {
-                return casted._hashCode == _hashCode;
-
+                var casted = obj as ComparableDictionaryAllOf<T, Y>;
+                if (casted != null)
+                {
+                    return casted._hashCode == _hashCode;
+                }
             }
             return false;
         }

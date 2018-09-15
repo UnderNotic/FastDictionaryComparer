@@ -15,14 +15,17 @@ namespace FastDictionaryComparer
 
         public override bool Equals(object obj)
         {
-            var casted = obj as ComparableDictionaryOneOf<T, Y>;
-            if (casted != null)
+            if (obj != null)
             {
-                for (var i = 0; i < _comparableValues.Length; i++)
+                var casted = obj as ComparableDictionaryOneOf<T, Y>;
+                if (casted != null)
                 {
-                    if (casted._comparableValues[i] == _comparableValues[i])
+                    for (var i = 0; i < _comparableValues.Length; i++)
                     {
-                        return true;
+                        if (casted._comparableValues[i] == _comparableValues[i])
+                        {
+                            return true;
+                        }
                     }
                 }
             }
