@@ -15,13 +15,13 @@ namespace FastDictionaryComparer.Benchmark
         private ComparableDictionaryAllOf<string, string>[] comparableAllOfDicts;
         private Dictionary<string, string>[] data;
 
-        [Params(1000)]
+        [Params(100, 1000)]
         public int DictNumber;
 
-        [Params(5, 10)]
+        [Params(10)]
         public int KeyValueStringLength;
 
-        [Params(5, 10)]
+        [Params(10)]
         public int DictLength;
 
         public static string RandomString(int length)
@@ -40,7 +40,11 @@ namespace FastDictionaryComparer.Benchmark
         }
 
         [Benchmark]
-        public int RefCount() => data.Count(x => x == new Dictionary<string, string> { { "12345", "12345" }, { "1234", "1234" }, { "123", "123" } });
+        public int RefCount()
+        {
+            var toFind = new Dictionary<string, string> { { "12345", "12345" }, { "1234", "1234" }, { "123", "123" } };
+            return data.Count(x => x == toFind);
+        }
 
         [Benchmark]
         public int LinqCount()
@@ -60,10 +64,18 @@ namespace FastDictionaryComparer.Benchmark
         }
 
         [Benchmark]
-        public int ComparableOneOfDictionaryContains() => comparableOneOfDicts.Count(x => x == new ComparableDictionaryOneOf<string, string>(null, Enumerable.Range(0, DictLength).Cast<int?>().ToArray()));
+        public int ComparableOneOfDictionaryCount()
+        {
+            var toFind = new ComparableDictionaryOneOf<string, string>(null, Enumerable.Range(0, DictLength).Cast<int?>().ToArray());
+            return comparableOneOfDicts.Count(x => x == toFind);
+        }
 
         [Benchmark]
-        public int AllComparableAllOfDictionaryContains() => comparableAllOfDicts.Count(x => x == new ComparableDictionaryAllOf<string, string>(null, Enumerable.Range(0, DictLength).Cast<int?>().ToArray()));
+        public int ComparableAllOfDictionaryCount()
+        {
+            var toFind = new ComparableDictionaryAllOf<string, string>(null, Enumerable.Range(0, DictLength).Cast<int?>().ToArray());
+            return comparableAllOfDicts.Count(x => x == toFind);
+        }
     }
 
     class Program
