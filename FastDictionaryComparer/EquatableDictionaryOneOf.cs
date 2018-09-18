@@ -22,7 +22,8 @@ namespace FastDictionaryComparer
                 {
                     for (var i = 0; i < _equatableValues.Length; i++)
                     {
-                        if (casted._equatableValues[i] == _equatableValues[i])
+                        var value = casted._equatableValues[i];
+                        if (value != null && value == _equatableValues[i])
                         {
                             return true;
                         }
