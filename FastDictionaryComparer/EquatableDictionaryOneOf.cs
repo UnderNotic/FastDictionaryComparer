@@ -2,27 +2,27 @@ using System.Collections.Generic;
 
 namespace FastDictionaryComparer
 {
-    public class ComparableDictionaryOneOf<T, Y>
+    public class EquatableDictionaryOneOf<T, Y>
     {
         public Dictionary<T, Y> Value { get; }
-        private int?[] _comparableValues { get; }
+        private int?[] _equatableValues { get; }
 
-        internal ComparableDictionaryOneOf(Dictionary<T, Y> dict, int?[] comparableValues)
+        internal EquatableDictionaryOneOf(Dictionary<T, Y> dict, int?[] equatableValues)
         {
             Value = dict;
-            _comparableValues = comparableValues;
+            _equatableValues = equatableValues;
         }
 
         public override bool Equals(object obj)
         {
             if (obj != null)
             {
-                var casted = obj as ComparableDictionaryOneOf<T, Y>;
+                var casted = obj as EquatableDictionaryOneOf<T, Y>;
                 if (casted != null)
                 {
-                    for (var i = 0; i < _comparableValues.Length; i++)
+                    for (var i = 0; i < _equatableValues.Length; i++)
                     {
-                        if (casted._comparableValues[i] == _comparableValues[i])
+                        if (casted._equatableValues[i] == _equatableValues[i])
                         {
                             return true;
                         }
@@ -37,12 +37,12 @@ namespace FastDictionaryComparer
             return 1;
         }
 
-        public static bool operator ==(ComparableDictionaryOneOf<T, Y> obj1, ComparableDictionaryOneOf<T, Y> obj2)
+        public static bool operator ==(EquatableDictionaryOneOf<T, Y> obj1, EquatableDictionaryOneOf<T, Y> obj2)
         {
             return obj1.Equals(obj2);
         }
 
-        public static bool operator !=(ComparableDictionaryOneOf<T, Y> obj1, ComparableDictionaryOneOf<T, Y> obj2)
+        public static bool operator !=(EquatableDictionaryOneOf<T, Y> obj1, EquatableDictionaryOneOf<T, Y> obj2)
         {
             return !obj1.Equals(obj2);
         }

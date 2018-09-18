@@ -11,10 +11,10 @@ namespace FastDictionaryComparer.Benchmark
     public class FastDictionaryComparerBenchmark
     {
         private static Random _random = new Random();
-        private ComparableDictionaryOneOf<string, string>[] _comparableOneOfDicts;
-        private ComparableDictionaryAllOf<string, string>[] _comparableAllOfDicts;
+        private EquatableDictionaryOneOf<string, string>[] _equatableOneOfDicts;
+        private EquatableDictionaryAllOf<string, string>[] _equatableAllOfDicts;
         private Dictionary<string, string>[] _data;
-        private ComparableDictionaryFactory<string, string> _factory;
+        private EquatableDictionaryFactory<string, string> _factory;
         private Dictionary<string, string> _toFindDict = new Dictionary<string, string> { { "12345", "12345" }, { "1234", "1234" }, { "123", "123" } };
 
         [Params(100, 500, 1000, 2000, 3000, 5000, 10000)]
@@ -37,9 +37,9 @@ namespace FastDictionaryComparer.Benchmark
         public void Setup()
         {
             _data = Enumerable.Range(0, DictNumber).Select(_ => Enumerable.Range(0, DictLength).ToDictionary(k => k.ToString(), v => RandomString(KeyValueStringLength))).ToArray();
-            _factory = new ComparableDictionaryFactory<string, string>(_data);
-            _comparableOneOfDicts = _data.Select(d => _factory.CreateComparableOneOfDictionary(d)).ToArray();
-            _comparableAllOfDicts = _data.Select(d => _factory.CreateComparableAllOfDictionary(d)).ToArray();
+            _factory = new EquatableDictionaryFactory<string, string>(_data);
+            _equatableOneOfDicts = _data.Select(d => _factory.CreateEquatableOneOfDictionary(d)).ToArray();
+            _equatableAllOfDicts = _data.Select(d => _factory.CreateEquatableAllOfDictionary(d)).ToArray();
         }
 
         [Benchmark]
@@ -65,17 +65,17 @@ namespace FastDictionaryComparer.Benchmark
         }
 
         [Benchmark]
-        public int ComparableOneOfDictionaryCount()
+        public int EquatableOneOfDictionaryCount()
         {
-            var toFind = _factory.CreateComparableOneOfDictionary(_toFindDict);
-            return _comparableOneOfDicts.Count(x => x == toFind);
+            var toFind = _factory.CreateEquatableOneOfDictionary(_toFindDict);
+            return _equatableOneOfDicts.Count(x => x == toFind);
         }
 
         [Benchmark]
-        public int ComparableAllOfDictionaryCount()
+        public int EquatableAllOfDictionaryCount()
         {
-            var toFind = _factory.CreateComparableAllOfDictionary(_toFindDict);
-            return _comparableAllOfDicts.Count(x => x == toFind);
+            var toFind = _factory.CreateEquatableAllOfDictionary(_toFindDict);
+            return _equatableAllOfDicts.Count(x => x == toFind);
         }
     }
 
