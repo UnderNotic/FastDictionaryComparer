@@ -40,7 +40,19 @@ namespace FastDictionaryComparer.Test
             var factory = new EquatableDictionaryFactory<string, int>(_set.Concat(new[] { toFind1, toFind2 }).ToArray());
 
             Assert.DoesNotContain(factory.CreateEquatableOneOfDictionary(toFind1), _set.Select(factory.CreateEquatableOneOfDictionary));
-            // Assert.DoesNotContain(factory.CreateEquatableOneOfDictionary(toFind2), _set.Select(factory.CreateEquatableOneOfDictionary));
+            Assert.DoesNotContain(factory.CreateEquatableOneOfDictionary(toFind2), _set.Select(factory.CreateEquatableOneOfDictionary));
+        }
+
+         [Fact]
+        public void EquatableDictionaryOneOfShouldUseKeyEqualityComparer()
+        {
+
+        }
+
+        [Fact]
+        public void EquatableDictionaryOneOfShouldUseValueEqualityComparer()
+        {
+
         }
     }
 }

@@ -8,10 +8,20 @@ using FastDictionaryComparer;
 public class EquatableDictionaryFactory<T, Y>
 {
     private readonly T[] _allKeys;
+    private readonly Func<Y, int> _valueGetHashCode;
 
-    public EquatableDictionaryFactory(Dictionary<T, Y>[] dicts)
+    public EquatableDictionaryFactory(Dictionary<T, Y>[] dicts, IEqualityComparer<T> keyEqualityComparer = null, IEqualityComparer<Y> valueEqualityComparer = null)
     {
-        _allKeys = dicts.SelectMany(d => d.Keys).Distinct().ToArray();
+        _allKeys = dicts.SelectMany(d => d.Keys).Distinct(keyEqualityComparer).OrderBy(_ => _).ToArray();
+
+        if (valueEqualityComparer == null)
+        {
+            _valueGetHashCode = (x) => x.GetHashCode();
+        }
+        else
+        {
+            _valueGetHashCode = (x) => valueEqualityComparer.GetHashCode(x);
+        }
     }
 
     public EquatableDictionaryOneOf<T, Y> CreateEquatableOneOfDictionary(Dictionary<T, Y> dict)
@@ -32,7 +42,7 @@ public class EquatableDictionaryFactory<T, Y>
         {
             if (dict.TryGetValue(key, out var value))
             {
-                return value.GetHashCode();
+                return _valueGetHashCode(value);
             }
             return new Nullable<int>();
         }).ToArray();
