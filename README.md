@@ -7,13 +7,13 @@ Compare dictionaries in performant way, much faster than using linq.
 ## Simple use example
 
 ```csharp
-            var set = Enumerable.Range(0, 10).Select(i => new Dictionary<string, string> { { "key1", i.ToString() }, { "key2", i.ToString() } });
+var set = Enumerable.Range(0, 10).Select(i => new Dictionary<string, string> { { "key1", i.ToString() }, { "key2", i.ToString() } });
 
-            var toFind = new Dictionary<string, string> { { "key1", "1" } };
+var toFind = new Dictionary<string, string> { { "key1", "1" } };
 
-            var factory = new EquatableDictionaryFactory<string, string>(set.Concat(new[] { toFind1, toFind2, toFind3, toFind4 }).ToArray());
+var factory = new EquatableDictionaryFactory<string, string>(set.Concat(new[] { toFind1, toFind2, toFind3, toFind4 }).ToArray());
 
-            Assert.Contains(factory.CreateEquatableOneOfDictionary(toFind1), set.Select(factory.CreateEquatableOneOfDictionary)); // It's true
+Assert.Contains(factory.CreateEquatableOneOfDictionary(toFind1), set.Select(factory.CreateEquatableOneOfDictionary)); // It's true
 ```
 
 ## Api
@@ -26,17 +26,19 @@ public EquatableDictionaryOneOf<T, Y> CreateEquatableOneOfDictionary(Dictionary<
 public EquatableDictionaryAllOf<T, Y> CreateEquatableAllOfDictionary(Dictionary<T, Y> dict);
 ```
 
-### EquatableDictionaryAllOf
+#### EquatableDictionaryOneOf
+
+One of key-value pairs should match to consider two dictionaries being equal.
+
+#### EquatableDictionaryAllOf
 
 All of key-value pairs should match to consider two dictionaries being equal.
 
-### EquatableDictionaryOneOf
-
-One of key-value pairs should match to consider two dictionaries being equal.
 
 ## Benchmark
 
 <img alt="benchmark" src="https://raw.githubusercontent.com/undernotic/FastDictionaryComparer/master/assets/benchmark.result.png">
+
 See [FastDictionaryComparer.Benchmark/Program.cs](https://github.com/UnderNotic/FastDictionaryComparer/blob/master/FastDictionaryComparer.Benchmark/Program.cs)
 
 ## Authors
