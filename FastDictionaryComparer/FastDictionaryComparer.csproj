@@ -2,6 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
 
+     <AssemblyName>FastDictionaryComparer</AssemblyName>
+    <PackageId>FastDictionaryComparer</PackageId>
+    <Title>FastDictionaryComparer</Title>
+    <Description>Compare dictionaries in performant way, much faster than using linq</Description>
+    <PackageProjectUrl>https://raw.githubusercontent.com/undernotic/FastDictionaryComparer/master/assets/logo.png</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/undernotic/FastDictionaryComparer/master/assets/logo-icon.png</PackageIconUrl>
+    <Authors>undernotic</Authors>
+    <Version>0.0.1$(VersionSuffix)</Version>
+    <PackageLicenseUrl>https://opensource.org/licenses/mit-license.php</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/UnderNotic/FastDictionaryComparer</PackageProjectUrl>
+    <PackageTags>FastDictionaryComparer;Comparer;Equality;Dictionary;performant;fast</PackageTags>
+  </PropertyGroup>
+  
 </Project>
