@@ -1,4 +1,5 @@
 # <img alt="logo" src="https://raw.githubusercontent.com/undernotic/FastDictionaryComparer/master/assets/logo.png">
+[![appveyor status](https://ci.appveyor.com/api/projects/status/github/undernotic/FastDictionaryComparer)](https://ci.appveyor.com/project/UnderNotic/FastDictionaryComparer) [![NuGet](https://img.shields.io/nuget/vpre/FastDictionaryComparer.svg?style=plastic)](https://www.nuget.org/packages/FastDictionaryComparer)
 
 Compare dictionaries in performant way, much faster than using linq.
 
@@ -45,7 +46,7 @@ See [FastDictionaryComparer.Benchmark/Program.cs](https://github.com/UnderNotic/
 
 - **Piotr Szymura** - [undernotic](https://github.com/undernotic)
 
-See also the list of [contributors](https://github.com/undernotic/etcdgrpcclient/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/undernotic/FastDictionaryComparer/contributors) who participated in this project.
 
 ## License
 
